@@ -1,0 +1,89 @@
+CREATE TABLE Professor (
+	profID integer PRIMARY KEY,
+	firstName text NOT NULL,
+	lastName text NOT NULL,
+	email text NOT NULL,
+	password text NOT NULL,
+	schoolID text,
+	FOREIGN KEY (schoolID) REFERENCES School (schoolID)
+);
+
+CREATE TABLE Student (
+	studID integer PRIMARY KEY,
+	firstName text NOT NULL,
+	lastName text NOT NULL,
+	email text NOT NULL,
+	password text NOT NULL,
+	schoolID text,
+	FOREIGN KEY (schoolID) REFERENCES School (schoolID)
+);
+
+CREATE TABLE School (
+	schoolID integer PRIMARY KEY,
+	school text NOT NULL,
+	email text NOT NULL,
+	password text NOT NULL
+);
+
+CREATE TABLE Class (
+	classID integer PRIMARY KEY,
+	name text NOT NULL,
+	sectionNum text NOT NULL,
+	maxCapacity integer NOT NULL,
+	numEnrolled integer NOT NULL,
+	openDate integer NOT NULL,
+	closeDate integer NOT NULL,
+	classCode text NOT NULL,
+	profID integer,
+	FOREIGN KEY (profID) REFERENCES Professor (profID)
+);
+
+CREATE TABLE Progress (
+	progressID integer PRIMARY KEY,
+	problemID integer,
+	FOREIGN KEY (problemID) REFERENCES Problem (problemID),
+	completed integer NOT NULL,
+	attempts integer DEFAULT 0
+);
+
+CREATE TABLE Problem (
+	problemID integer PRIMARY KEY,
+	problemQuestion text NOT NULL,
+	probAnswer text NOT NULL,
+	story text NOT NULL,
+	packID integer,
+	FOREIGN KEY (packID) REFERENCES Pack (packID)
+);
+
+CREATE TABLE Pack (
+	packID integer PRIMARY KEY,
+	topic text NOT NULL,
+	description text NOT NULL,
+	finished integer NOT NULL
+);
+
+CREATE TABLE Admin (
+	adminID integer PRIMARY KEY,
+	username text NOT NULL,
+	email text NOT NULL,
+	password text NOT NULL
+);
+
+CREATE Connection(Link) (
+	packID integer,
+	classID integer,
+	PRIMARY KEY (packID, classID),
+	FOREIGN KEY (packID) REFERENCES Pack (packID),
+	FOREIGN KEY (classID) REFERENCES Class (classID) 
+);
+
+CREATE Enrollment(Link) (
+	studID integer,
+	classID integer,
+	progressID integer,
+	PRIMARY KEY (studID, classID),
+	FOREIGN KEY (studID) REFERENCES Student (studID),
+	FOREIGN KEY (classID) REFERENCES Class (classID),
+	FOREIGN KEY (progressID) REFERENCES Progress (progressID)
+
+);
