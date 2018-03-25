@@ -1,0 +1,60 @@
+body {
+	background-color: black;
+	color: lime;
+	font-family: "Lucida Console", Monaco, Monospace;
+}
+
+.container h1 {
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.form-control {
+	background-color: black;
+	color: lime;
+	font-family: "Lucida Console", Monaco, Monospace;
+	border-color: lime;
+	border-style: solid;
+	margin-left: auto;
+	margin-right: auto;
+	width: 75%;
+}
+
+.btn-outline-success {
+	display: block;
+	border-color: lime;
+	color: grey;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+}
+
+#toRegister {
+	text-align: center;
+}
+
+
+#inputLine {
+	position: absolute;
+	display: table;
+	border-top-style: solid;
+	width: 100%;
+	bottom: 0px;
+}
+
+#inputLine span, #commandLine {
+	display:table-cell;
+	margin: 0px;
+}
+
+#inputLine span {
+	width: 14px;
+}
+
+#commandLine {
+	background-color: black;
+	color: lime;
+	width: 100%;
+	border-style: none;
+}
