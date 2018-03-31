@@ -5,16 +5,21 @@
 	<link rel="shortcut icon" href="images/codingBot.png">
 	<meta charset="utf-8">
 	<meta name="viewport" content"width=device-width, initial-scale=1">
+	{% load staticfiles %}
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="cssFiles/styleSheet.css">
+	<link rel="stylesheet" href="{% static 'CodingBotSite/styleSheet.css' %}">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="javascript/controlOperations.js"></script>
+	<script src="{% 'static CodingBotSite/controlOperations.js' %}"></script>
 </head>
 <body>
+<!--Container for bootstrap organization-->
 <div class="container">
 	<h1>Coding Bot: Basics of Java</h1>
+	<!--Form meant to compare input to database then send to game-->
+	<!--Currently just goes to the student game page-->
 	<form action="studentMenu.html" method="post" target="_self">
+	<!--Form group organize the fields into a bootstrap table-->
 	<div class="form-group">
 		<input class="form-control" type="email" name="email" placeholder="Email">
 	</div>
@@ -23,6 +28,7 @@
 	</div>
 	<button type="submit" class="btn btn-outline-success">Submit</button>
 	</form>
+	<!--Links back to the registration page-->
 	<p id="toRegister">Are you a student and don't have an account? <a href="register.html">Register here!</a></p>
 </div>
 </body>
