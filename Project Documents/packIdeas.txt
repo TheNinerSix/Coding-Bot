@@ -1,9 +1,29 @@
 Variable Types
+	Integer
+	String
+	Boolean
+	Char
+	Single
+	Double
+	Long
+	Short
 Printing
+	printf
+	System.out.print
+	System.out.println
 Arrays
 2d Arrays
 Loops
+	for
+	while
+	do while
 Nested Loops
 If Statements
+	If
+	If else
+	If ElseIf
 Math Functions
 Objects
+	Constructors
+	Getters and Setters
+	Two Constructors

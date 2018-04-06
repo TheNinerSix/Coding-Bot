@@ -1,0 +1,66 @@
+Question: 
+(minimun of 5)
+public static void main(String args[]) {
+
+int x = 2;
+
+___________{
+	x = 5;
+}
+System.out.print(x);
+}
+Answer:
+5
+
+Question: 
+public static void main(String args[]) {
+
+int x = 8;
+
+if(x>5 __ x<10){
+	System.out.println("x is in the range");
+}
+
+}
+Answer:
+x is in the range
+
+Question:
+public static void main(String args[]) {
+int x = 8;
+
+if(x>15 __ x<10){
+	System.out.print("x is out of the range");
+}
+
+}
+Answer: x is out of the range
+
+Question:
+public static void main(String args[]) {
+boolen hasKey = false;
+if(hasKey){
+	System.out.print("I have the key");
+}
+____{
+	System.out.print("I lost the key");
+}
+}
+Answer:
+I lost the key
+
+Question:
+public static void main(String args[]) {
+int x = 11;
+if(x>=15){
+	System.out.print("You can afford large drink");
+}
+___(x>=10){
+	System.out.print("You can afford a regular drink");
+}
+else{
+	System.out.print("You can't afford a drink);
+}	
+}
+Answer:
+You can afford a regular drink
