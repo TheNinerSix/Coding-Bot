@@ -1,4 +1,4 @@
-/* HTML Element Styles ---------------------------------------------------------------------------------- */
+/* HTML Element Styles =================================================================================== */
 
 /* color, text, and font consistency */
 body {
@@ -8,13 +8,29 @@ body {
 }
 
 
-/* Class Styles ----------------------------------------------------------------------------------------- */
+/* Class Styles ========================================================================================= */
+
+/* override bootstrap css */
+.btn-outline-success {
+	display: block;
+	border-color: lime;
+	color: grey;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+}
 
 /* position title top center */
 .container h1 {
 	text-align: center;
 	padding-bottom: 10px;
 	padding-top: 10px;
+}
+
+/*Visual field for user input*/
+.currentTab {
+	background: white;
+	padding: 10px;
 }
 
 /* override bootstrap css */
@@ -29,18 +45,23 @@ body {
 	width: 75%;
 }
 
-/* override bootstrap css */
-.btn-outline-success {
-	display: block;
-	border-color: lime;
-	color: grey;
-	margin-left: auto;
-	margin-right: auto;
+/*Add scroll box for pack selection*/
+.packOptions {
+	border: 2px solid grey;
 	margin-bottom: 10px;
+	padding: 2px;
+	height: 100px;
+	overflow-y: scroll;
 }
 
-/* ID Styles ------------------------------------------------------------------------------------------------ */
+/*Color and padding for visual appeal*/
+.tabBorder {
+	padding: 30px;
+	background-color: grey;
+	color: black;
+}
 
+/* ID Styles ================================================================================================= */
 
 /* command line input field */
 #commandLine {
