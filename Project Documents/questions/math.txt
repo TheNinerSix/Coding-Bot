@@ -1,0 +1,37 @@
+Question:
+public static void main(String args[]) {
+int x1 = 0;
+int y1 = 3;
+int x2 = 4;
+int y2 = 6;
+
+int distance = _______________________
+
+System.out.println(“I need to walk ”+ distance +" feet.");
+}
+Answer:
+5
+
+Question:
+public static void main(String args[]) {
+int move = -10;
+
+int distance = _______________________
+
+System.out.println(“I need to backup ”+ distance +" feet.");
+}
+Answer:
+10
+
+Question:
+Write a statement that rounds 10.40 up
+Answer:
+11
+
+Question:
+Write a statement that rounds 5.90 down
+Answer:
+5
+
+Question:
+Write a statement that finds the max between 10 and 3

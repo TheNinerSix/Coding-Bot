@@ -1,0 +1,42 @@
+Question:
+Write a statment that will allow it tell this person 'Hello'.
+Answer:
+Hello
+
+Question:
+public static void main(String args[]) {
+	int people = 5;
+	int handshakes = 2;
+	int remaining;
+			
+	remaining = people - handshakes;
+	System.out.printf(“I have met __ people here”, _____);
+}
+Answer:
+I have met 2 people here
+
+Question:
+public static void main(String args[]) {
+	int people = 5;
+	int handshakes = 2;
+	int remaining;
+			
+	remaining = people - handshakes;
+	System.out.print(“I need to talk to "_____" more people");
+}
+Answer:
+I need to talk to 3 more people
+
+Question:
+Write a statment that will allow it tell this person 'How are you?' with a new line.
+Answer:
+How are you?
+
+Question:
+(round to two decimal places)
+public static void main(String args[]) {
+	double x = 5.3456789;
+	System.out.printf(“I am paying about __ dollars per ounce”, x);
+}
+Answer:
+I am paying about 5.35 dollars per ounce
