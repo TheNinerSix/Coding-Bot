@@ -40,9 +40,8 @@ body {
 	font-family: "Lucida Console", Monaco, Monospace;
 	border-color: lime;
 	border-style: solid;
-	margin-left: auto;
-	margin-right: auto;
-	width: 75%;
+	margin: 15px auto;
+	max-width: 450px;
 }
 
 /*Add scroll box for pack selection*/
@@ -89,6 +88,10 @@ body {
 #inputLine span, #commandLine {
 	display:table-cell;
 	margin: 0px;
+}
+
+#submit {
+	width: 175px;
 }
 
 /* align registration link to center */

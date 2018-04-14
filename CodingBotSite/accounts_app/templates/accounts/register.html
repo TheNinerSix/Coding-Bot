@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="{% static 'accounts/style.css' %}">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="{% 'static accounts/controlOperations.js' %}"></script>
+	<script src="{% static 'accounts/controlOperations.js' %}"></script>
 </head>
 <body>
 <!--Container for bootstrap organization-->
@@ -19,32 +19,21 @@
 	<!--Form meant to store new account in database-->
 	<!--Currently changes current url to the login page-->
 	<form action="login.html" target="_self">
-	<!--Form group and col-sm organize the fields into a bootstrap table-->
-	<div class="form-group row">
-		<div class="col-sm-6">
-			<input class="form-control" type="email" name="email" placeholder=".edu email">
+		<div class="form-group row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-5">
+				<input class="form-control" type="email" name="email" placeholder=".edu email">
+				<input class="form-control" type="text" name="firstname" placeholder="First Name">
+				<input class="form-control" type="password" name="reenter" placeholder="Re-enter Password">	
+			</div>
+			<div class="col-sm-5">
+				<input class="form-control" type="text" name="classcode" placeholder="Class Code">
+				<input class="form-control" type="text" name="lastname" placeholder="Last Name">
+				<input class="form-control" type="password" name="password" placeholder="Password">
+			</div>
+			<div class="col-sm-1"></div>
 		</div>
-		<div class="col-sm-6">
-			<input class="form-control" type="text" name="classcode" placeholder="Class Code">
-		</div>
-	</div>
-	<div class="form-group row">
-		<div class="col-sm-6">
-			<input class="form-control" type="text" name="firstname" placeholder="First Name">
-		</div>
-		<div class="col-sm-6">
-			<input class="form-control" type="text" name="lastname" placeholder="Last Name">
-		</div>
-	</div>
-	<div class="form-group row">
-		<div class="col-sm-6">
-			<input class="form-control" type="password" name="password" placeholder="Password">
-		</div>
-		<div class="col-sm-6">
-			<input class="form-control" type="password" name="reenter" placeholder="Re-enter Password">	
-		</div>
-	</div>
-	<button type="submit" class="btn btn-outline-success">Submit</button>
+		<button id="submit" type="submit" class="btn btn-outline-success">Submit</button>
 	</form>
 </div>
 </body>
