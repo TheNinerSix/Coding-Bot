@@ -1,0 +1,38 @@
+INTRODUCTION: GOES IN THE STUDENTMENU.HTML
+You are currently within the source code of Coding Bot. He is my latest invention in humanoid robotics. I've sent him out into the world to run some tests on how well he can blend into society, but his current software is unstable. I need you to monitor his adventures and fill in places in his code when he starts to act suspiciously. If you can do this well, I'll inform your professor of your abilities and ensure your class grade is remarkably high. Good luck! -Dr. Javachip
+
+Pack 1
+Q1:
+Today, Coding Bot is attempting to travel to the local coffee shop for a drink. This will test the stability of his if statements. Currently, the Coding Bot's travel is set to 2. He needs it set to 5 to trigger the movement sequence for today's exercise. Add whatever you can to the if statement to get the value altered.
+Q2:
+Oh dear, It seems Coding Bot is having trouble setting the coordinates of the coffee shop into his memory. He's been cycling the latitude for quite a while now. He doesn't need an absolute value, just an accurate range. Please repair his statement so that his coordinate is only true if both conditions are met.
+Q3:
+It seems we have run into another problem. You see, Coding Bot obviously has to pay for the coffee, so we have given him a large amount of coins to carry. The problem is it lost the functionality of knowing the appropriate distance to hold items. It's constantly swapping between mashing its fist into its mouth and thrusting its arm too far out and falling over. Please fix it so it knows either of these conditions are out of the appropriate holding range.
+Q4:
+Well now, this is just silly. We haven't given Coding Bot the key to the front door yet, so its supposed to declare "I lost the key" and head to the coffee shop regardless. Somehow, the if statement broke and its standing at the door, pressing his hand on the lock, repeatedly shouting "I have the key." If you don't create a statement to get it admit that its lost the key, someone on the street is bound to start questioning my robot.
+Q5:
+Alright we got him to the coffee shop, but errors have stuck once more. I designed it to do basic mathematics, but it seems to have lost the ability to compare his money with the price of things. Coding Bot is intended to buy the most expensive thing it can afford, but the statement for checking something only if the first statement has failed has become corrupted. If you can't fix this then Coding Bot will show the cashier his coins and state that he can't afford a drink. We're so close, just solve this last problem!
+
+Pack 2
+Q1:
+Today, Coding Bot is doing something especially difficult. We have it posing as a dance instructor and must perform the routines before asking the students to do the same. This leadership position means we can use preset statements to get through most of the interactions without any issue. What we'll be having trouble with is the precise movements that our mathematics are meant to account for. Coding Bot seems to have set his proper distance to the power of two accidentally. Find a way to regain the appropriate distance before Coding Bot goes crashing through one of the walls!
+Q2:
+I understand that this would be impressive for a human, but it's highly suspicious for our robot. Before performing the routine, we instructed Coding Bot to do basic stretches such as toe touches. It seems our formula to receive a positive value has backfired and Coding Bot is touching his toes while bent completely backwards. Please use a math function to return the distance as a positive value.
+Q3:
+No one's ankles are this strong; this is bad. Coding Bot formula created a decimal value that left its hands hovering off the ground while bent into a table stance. You should hurry with this next one, all the students are looking quite disturbed by our robots flexibility and strength. We need a math function that rounds the decimal value up so that its hands press up to the floor with resistance.
+Q4:
+Well now it seems we have the opposite problem. Coding Bot is leaning against the wall with so much force that the glass seems like it could begin to crack at any moment. I'm sure the other problems could be passed as an exceptional human, but casually pushing glass apart is too far. We need a Math function that rounds the high level of force down to a reasonable level before we have to start paying for property damages.
+Q5:
+All this activity is starting to cause Coding Bot to overheat and even some of the basic algorithmic functions are starting to break. Somehow, Coding Bot seems to have added two possible values into memory for how much coolant to apply through its body. Normally, the maximum amount of coolant would be applied if there was a contradiction in memory. That mathematical function seems to have been lost while overheating, so please restore it before Coding Bot begins to release steam from its ears.
+
+Pack 3
+Q1:
+Today, we're working on Coding Bot's linguistics skills with some live training. We have placed it into a bar disguised as our intern Ted's friend. This scenario is built around meeting strangers and discussing openly, so hopefully Coding Bot will be capable of fooling everyone in the establishment. Oh, Coding Bot seems to have forgotten how to say "Hello". Please help it get started with a statement that will let it say "Hello".
+Q2:
+It seems hello was all Coding Bot needed. It has been doing a competent job of making dull small talk. Ted seems to be asking who Coding Bot has talked to, but Coding Bot has frozen up. It seems this is the first time it has had to perform mathematics while speaking. Please check his print statement and make adjustments where necessary.
+Q3:
+Well this is quite the development. Coding Bot seems to be trying to respond to Ted with a follow up statement. I had tried to add follow ups into his code at one point, but I never added a trigger for them to occur. Coding Bot has tweaked its prior statement to declare the remaining number of people it needs speak to, but it used the wrong print statement and the line is broken again. Please fix the statement, I'm sure Ted will be surprised by this new capacity for speech.
+Q4:
+Sorry, but I'll have to have you deal with a tricky issue this time around. You see, Coding Bot has queued up another print statement. The problem is this one demands a new line is created at the end of it. While this has no effect on what it ends up saying, not following this thread of logic will pass and error and cause major issues. Please create a print statement that will cause Coding Bot to say "How are you?" while also passing a new line at the end. I'd hate to see how people will react if Coding Bot's neck snaps to the side like it usually does with errors.
+Q5:
+The final person Coding Bot is talking to appears to be an especially frugal man. He has asked Coding Bot exactly how much it is paying for the ale it's pretending to drink. Coding Bot seems to be repeatedly preparing to speak and then pouring more ale into its hidden liquid sack. I believe I understand where I had made a mistake here. Since this is a dollar amount, Coding Bot has to round the double value it calculated before speaking. Please find a way to round the amount within the print statement before Coding Bot starts pouring an empty glass into its mouth.

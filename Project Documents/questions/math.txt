@@ -1,11 +1,8 @@
 Question:
 public static void main(String args[]) {
-int x1 = 0;
-int y1 = 3;
-int x2 = 4;
-int y2 = 6;
+int distancePow = 25;
 
-int distance = _______________________
+int distance = Math.________
 
 System.out.println(“I need to walk ”+ distance +" feet.");
 }
@@ -14,11 +11,11 @@ Answer:
 
 Question:
 public static void main(String args[]) {
-int move = -10;
+int bend = -10;
 
-int distance = _______________________
+int absoluteBend = Math.___________
 
-System.out.println(“I need to backup ”+ distance +" feet.");
+System.out.println(“I need to stretch ”+ absoluteBend +" inches to touch my toes.");
 }
 Answer:
 10

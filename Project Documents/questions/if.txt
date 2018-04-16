@@ -4,7 +4,7 @@ public static void main(String args[]) {
 
 int x = 2;
 
-___________{
+if(________){
 	x = 5;
 }
 System.out.print(x);
@@ -55,7 +55,7 @@ int x = 11;
 if(x>=15){
 	System.out.print("You can afford large drink");
 }
-___(x>=10){
+if ____(x>=10){
 	System.out.print("You can afford a regular drink");
 }
 else{
