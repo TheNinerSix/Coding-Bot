@@ -11,15 +11,16 @@ class Course(models.Model):
     closeDate = models.DateTimeField('Close Date')
     professorID = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
-class Progress(models.Model):
-    problemID = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    completed = models.IntegerField(default=0)
-    attempts = models.IntegerField(default=0)
-
 class Enrollment(models.Model):
     studID = models.ForeignKey(Student, on_delete=models.CASCADE)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
-    progressID = models.ForeignKey(Progress, on_delete=models.CASCADE)
+
+class Progress(models.Model):
+    problemID = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    packID = models.ForeignKey(Pack, on_delete=models.CASCADE, default = 0)
+    enrollmentID = models.ForeignKey(Enrollment, on_delete=models.CASCADE, default = 0)
+    completed = models.IntegerField(default=0)
+    attempts = models.IntegerField(default=0)
 
 class Connection(models.Model):
     packID = models.ForeignKey(Pack, on_delete=models.CASCADE)
