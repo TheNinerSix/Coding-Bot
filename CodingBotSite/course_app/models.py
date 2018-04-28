@@ -11,6 +11,8 @@ class Course(models.Model):
     closeDate = models.DateTimeField('Close Date')
     professorID = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
+#comment to force change
+
 class Enrollment(models.Model):
     studID = models.ForeignKey(Student, on_delete=models.CASCADE)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
