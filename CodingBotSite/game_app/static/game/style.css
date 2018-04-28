@@ -13,6 +13,25 @@ body {
 
 /* ID Styles ------------------------------------------------------------------------------------------------ */
 
+/*Container for the entire page*/
+#page {
+	max-width: none;
+}
+
+/*Holds content and commandLine*/
+#game {
+	display: block;
+	position: relative;
+	height: 100vh;
+}
+
+/*Display text for StudentMenu*/
+#contentLine {
+	position: relative;
+	overflow: auto;
+	height: calc(100% - 29px);
+}
+
 /* command line input field */
 #commandLine {
 	background-color: black;
@@ -23,16 +42,16 @@ body {
 
 /* command line input field */
 #inputLine {
-	position: absolute;
+	position: relative;
 	display: table;
 	border-top-style: solid;
 	width: 100%;
-	bottom: 0px;
 }
 
 /* set > size to text-size */
 #inputLine span {
 	width: 14px;
+	background-color: black;
 }
 
 /* make > and Text input inline */
