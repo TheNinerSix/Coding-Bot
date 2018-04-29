@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,9 +35,16 @@
 		<!--These lines create the illusion of a command line input field-->
 		<div id="inputLine">
 			<span>></span>
-			<input type="text" id="commandLine" name="command" autofocus></input>
+			<form id="menuAction" action="" method="get">
+				{{ form.input }}
+				<button type="submit" value="submit" id="submitMenu">Submit</button>
+			</form>
 		</div>
 	</div>
 </div>
 </body>
 </html>
+
+<script>
+
+</script>

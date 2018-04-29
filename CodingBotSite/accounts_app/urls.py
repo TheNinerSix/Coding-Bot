@@ -13,5 +13,5 @@ urlpatterns = [
     # codingbot.com/school
     path('school', views.school, name='school'),
     # codingbot.com/student
-    path('student', views.student, name='student'),    
+    path('student', views.studentMenuFormView.as_view(), name='student'),
 ]

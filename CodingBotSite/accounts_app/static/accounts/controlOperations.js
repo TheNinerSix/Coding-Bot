@@ -2,14 +2,62 @@
 //COMMENTS CANNOT BE PROPERLY ADDED TO TEMPLATE LITERALS (` `) SO ALL COMMENTS WILL BE ABOVE THE FUNCTIONS
 //ALL FORM SUBMISSION ARE SENT TO SELF AND NOT USED AT ALL
 
-//Gives functionality to the popovers on Input fields
-$(function(){
-    $('[data-toggle="popover"]').popover()
-  });
-  
-  //Function to display the Class Creation code in professor.html
-  //All form-group rows are meant to align labels and input fields
-  //HARDCODED: Pack Selection
+window.onload = function() {
+	
+	//Gives functionality to the popovers on Input fields
+	$(function(){
+		$('[data-toggle="popover"]').popover()
+	  });
+
+	$("#menuAction").submit(function() {
+		var input = $("#commandLine").val();
+		$("#commandLine").val("");
+		switch(input) {
+			case "Start Game":
+				window.location.assign("http://127.0.0.1:8000/game");
+				console.log("Valid");
+				break;
+			case "Continue":
+				window.location.assign("http://127.0.0.1:8000/game");
+				console.log("Valid");
+				break;
+			case "Class Select":
+				
+				console.log("Valid");
+				break;
+			case "Progress Report":
+				
+				console.log("Valid");
+				break;		
+			case "Help":
+				$("#contentLine").append(
+				`<p>'Start Game' - Start the level pack from the beginning<br/>
+				'Continue' - Start the level pack from where you left off<br/>
+				'Class Select' - Choose the class you want to progress in<br/>
+				'Progress Report' - View a report of how you're doing<br/>
+				'Help' - Display all the available commands<br/>
+				'Log Out' - Quit playing with this account</p>`);
+				console.log("Valid");
+				break;		
+			case "Log Out":
+				window.location.assign("http://127.0.0.1:8000/");
+				console.log("Valid");
+				break;		
+			default:
+				$("#contentLine").append(
+				`<p>Invalid Input: Please type 'Help' if you 
+				have forgotten the required command.</p>`);
+				console.log("Invalid");
+				break;	
+		}
+		$("#contentLine").scrollTop($("#contentLine")[0].scrollHeight);
+		return false;
+	});
+}
+
+//Function to display the Class Creation code in professor.html
+//All form-group rows are meant to align labels and input fields
+//HARDCODED: Pack Selection
 function createClass() {
     document.getElementById("professorView").innerHTML = 
     `
@@ -63,10 +111,10 @@ function createClass() {
     `;
 }
   
-  //Function to display the class view code for professor.html
-  //Table responsive keeps table within div
-  //Table hover creates grey highlight when mouse over table row
-  //HARDCODED: Table Data
+//Function to display the class view code for professor.html
+//Table responsive keeps table within div
+//Table hover creates grey highlight when mouse over table row
+//HARDCODED: Table Data
 function viewClass() {
     document.getElementById("professorView").innerHTML = 
     `
@@ -103,9 +151,9 @@ function viewClass() {
     `;
   }
   
-  //Function to display the edit class code for professor.html
-  //disabled indicates the fields cannot be altered by the userAgent
-  //HARDCODED: Values of all fields need to be filled by database including Pack Selection, Packs themselves are also hard coded
+//Function to display the edit class code for professor.html
+//disabled indicates the fields cannot be altered by the userAgent
+//HARDCODED: Values of all fields need to be filled by database including Pack Selection, Packs themselves are also hard coded
 function editClass() {
     document.getElementById("professorView").innerHTML =
     `
@@ -158,9 +206,9 @@ function editClass() {
     `;
 }
   
-  //Function to display the professor creation code for school.html
-  //Basic form like the others with input fields for a professor account
-  //HARDCODED: None
+//Function to display the professor creation code for school.html
+//Basic form like the others with input fields for a professor account
+//HARDCODED: None
 function createProfessor() {
     document.getElementById("schoolView").innerHTML =
     `
@@ -195,9 +243,9 @@ function createProfessor() {
     `;
 }
   
-  //Function to display the account management code for school.html
-  //Another table with extra headers for edit and delete functionality
-  //HARDCODED: Table Data, Filter Options do nothing, Edit & Delete do nothing
+//Function to display the account management code for school.html
+//Another table with extra headers for edit and delete functionality
+//HARDCODED: Table Data, Filter Options do nothing, Edit & Delete do nothing
 function viewAccounts() {
     document.getElementById("schoolView").innerHTML = 
     `
@@ -244,8 +292,4 @@ function viewAccounts() {
     </table>
     </div>		
     `
-}
-  
-function menuCommands() {
-	
 }

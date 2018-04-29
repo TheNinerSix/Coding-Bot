@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     # codingbot.com/game
-    path('', views.index, name='game'),
+    path('', views.studentGameFormView.as_view(), name='game'),
 ]
