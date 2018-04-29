@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'widget_tweaks', # Must first be installed with pip on the system. Use command 'pip install django-widget-tweaks'. It's used to enable the ability to add css classes to Django form fields.
     'game_app.apps.GameAppConfig',
     'course_app.apps.CourseAppConfig',
     'accounts_app.apps.AccountsAppConfig',
