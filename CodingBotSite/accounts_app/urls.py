@@ -13,5 +13,7 @@ urlpatterns = [
     # codingbot.com/school
     path('school', views.school, name='school'),
     # codingbot.com/student
-    path('student', views.student, name='student'),    
+    path('student', views.student, name='student'),
+    # codingbot.com/logout
+    path('logout', views.logout_view, name='logout')
 ]

@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic
 from django.views.generic import View
 from .forms import UserRegistrationForm, LoginForm
-from .models import Student, School
-from course_app.models import Course
+from .models import UserType
 
 # Create your views here.
+
+
 def index(request):
     context = {}
     return render(request, 'accounts/index.html', context)
@@ -27,6 +28,11 @@ def school(request):
 def student(request):
     context = {}
     return render(request, 'accounts/studentMenu.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 
 class LoginFormView(View):
@@ -68,31 +74,24 @@ class UserRegistrationFormView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            # save the form data in an object, but don't save to database
-            student = form.save(commit=False)
-
-            # clean and normalize the data
-            clean_username = form.cleaned_data['username']
-            clean_email = form.cleaned_data['email']
+            # Save the form data in an object, but don't save to database. (Note: form.save gathers all other
+            #   data like email and username, so it doesnt need to be cleaned and explicitly set for new_student.
+            new_student = form.save(commit=False)
             clean_password = form.cleaned_data['password']
-            clean_firstName = form.cleaned_data['first_name']
-            clean_lastName = form.cleaned_data['last_name']
+            new_student.set_password(clean_password)
+            new_student.save()
 
-            student.set_password(clean_password)
-            # save the data to the database
-            student.save()
+            # Add the type of user (in this case: student) to the user types table
+            new_user_type = UserType.objects.create(
+                user=new_student,
+                userType='STUD'
+            )
+            new_user_type.save()
 
-            # returns student object if credentials are correct
-            student = authenticate(username=clean_username, password=clean_password)
-
-            # if there is a user that matches the credentials
-            if student is not None:
-                
-                if student.is_active:
-                    # log the user in
-                    login(request, student)
-                    # access user with request.student.first_name
-                    return redirect('student')
+            # redirect them to the login page so they can now login with their account
+            return redirect('login')
 
         # if register fails return register page
         return render(request, self.template_name, {'form': form})
+
+
