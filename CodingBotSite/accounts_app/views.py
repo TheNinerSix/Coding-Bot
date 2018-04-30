@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views import generic
+from django.views.generic import View
+from .forms import studentMenuForm
 
 # Create your views here.
 # Views are functions that return html
@@ -22,3 +25,11 @@ def school(request):
 def student(request):
     context = {}
     return render(request, 'accounts/studentMenu.html', context)
+	
+class studentMenuFormView(View):
+	form_class = studentMenuForm
+	template_name = "accounts/studentMenu.html"
+	
+	def get(self, request):
+		form = self.form_class(None)
+		return render(request, self.template_name, {'form': form})

@@ -14,7 +14,7 @@ body {
 .btn-outline-success {
 	display: block;
 	border-color: lime;
-	color: grey;
+	color: lime;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 10px;
@@ -34,7 +34,7 @@ body {
 }
 
 /* override bootstrap css */
-.form-control {
+.form-control, .form-control:focus {
 	background-color: black;
 	color: lime;
 	font-family: "Lucida Console", Monaco, Monospace;
@@ -62,25 +62,54 @@ body {
 
 /* ID Styles ================================================================================================= */
 
+#submitMenu {
+	visibility: hidden;
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+}
+
+/*Container for the entire page*/
+#page {
+	max-width: none;
+}
+
+/*Holds content and commandLine*/
+#game {
+	display: block;
+	position: relative;
+	height: 100vh;
+}
+
+/*Display text for StudentMenu*/
+#contentLine {
+	position: relative;
+	overflow: auto;
+	height: calc(100% - 29px);
+}
+
 /* command line input field */
 #commandLine {
 	background-color: black;
 	color: lime;
 	width: 100%;
 	border-style: none;
+	box-shadow: none;
+	outline: none;
 }
 
 /* command line input field */
 #inputLine {
-	position: absolute;
+	position: relative;
 	display: table;
 	border-top-style: solid;
 	width: 100%;
-	bottom: 0px;
 }
 
 /* set > size to text-size */
 #inputLine span {
+	background-color: black;
 	width: 14px;
 }
 

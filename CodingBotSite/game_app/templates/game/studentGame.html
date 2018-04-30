@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +15,20 @@
 </head>
 <body>
 <!--Container for bootstrap organization-->
-<div class="container">
-	<div class="row">
-	<p>Welcome to Coding Bot!
-	Database access and proper Javascript is required to add more to this page.
-	Bootstrap design and scalability has been completed.</p>
-	</div>
+<div id="page" class="container">
+	<div id="game" class="row">
+		<div id="contentLine">
+			<p>Welcome to Coding Bot!
+			Database access and proper Javascript is required to add more to this page.
+			Bootstrap design and scalability has been completed.</p>
+		</div>
 	<!--These lines create the illusion of a command line input field-->
-	<div class="row">
 		<div id="inputLine">
 			<span>></span>
-			<input type="text" id="commandLine" name="command" autofocus></input>
+			<form action="" method="get">
+			{{ form.input }}
+			<button type="submit" value="submit" id="submitMenu">Submit</button>
+			</form>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,18 +15,29 @@
 </head>
 <body>
 <!--Container for bootstrap organization-->
-<div class="container">
-	<div class="row">
-	<p>Welcome to Coding Bot!
-	There is currently no functionality on this page, but the basic format has been established.
-	Javascript and Database access is needed to make the menu work properly.
-	Bootstrap design and scalability has been completed.</p>
-	</div>
-	<!--These lines create the illusion of a command line input field-->
-	<div class="row">
+<div id="page" class="container">
+	<div id="game" class="row">
+		<div id="contentLine">
+			<p>Welcome to Coding Bot: Basics of Java!</p>
+			<p>You are currently within the source code of Coding Bot. He is my latest invention in humanoid robotics. 
+			I've sent him out into the world to run some tests on how well he can blend into society, but his current software is unstable. 
+			I need you to monitor his adventures and fill in places in his code when he starts to act suspiciously. 
+			If you can do this well, I'll inform your professor of your abilities and ensure your class grade is remarkably high. 
+			Good luck! -Dr. Javachip</p>
+			<p>Type out one of the following commands to begin playing:</p>
+			<p>'Pack Select' - Choose a question pack to work on<br/>
+			'Class Select' - Choose the class you want to progress in<br/>
+			'Progress Report' - View a report of how you're doing<br/>
+			'Help' - Display all the available commands<br/>
+			'Log Out' - Quit playing with this account</p>
+		</div>
+		<!--These lines create the illusion of a command line input field-->
 		<div id="inputLine">
 			<span>></span>
-			<input type="text" id="commandLine" name="command" autofocus></input>
+			<form id="menuAction" action="" method="get">
+				{{ form.input }}
+				<button type="submit" value="submit" id="submitMenu">Submit</button>
+			</form>
 		</div>
 	</div>
 </div>
