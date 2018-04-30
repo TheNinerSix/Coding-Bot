@@ -10,14 +10,10 @@ window.onload = function() {
 	  });
 
 	$("#menuAction").submit(function() {
-		var input = $("#commandLine").val();
-		$("#commandLine").val("");
+		var input = $("#commandLine").val(); //GET INPUT FIELD
+		$("#commandLine").val(""); //CLEAR TEXT FIELD
 		switch(input) {
-			case "Start Game":
-				window.location.assign("http://127.0.0.1:8000/game");
-				console.log("Valid");
-				break;
-			case "Continue":
+			case "Pack Select": //URL REDIRECT
 				window.location.assign("http://127.0.0.1:8000/game");
 				console.log("Valid");
 				break;
@@ -30,28 +26,27 @@ window.onload = function() {
 				console.log("Valid");
 				break;		
 			case "Help":
-				$("#contentLine").append(
-				`<p>'Start Game' - Start the level pack from the beginning<br/>
-				'Continue' - Start the level pack from where you left off<br/>
+				$("#contentLine").append( //DISPLAY TEXT
+				`<p>'Pack Select' - Choose a question pack to work on<br/>
 				'Class Select' - Choose the class you want to progress in<br/>
 				'Progress Report' - View a report of how you're doing<br/>
 				'Help' - Display all the available commands<br/>
 				'Log Out' - Quit playing with this account</p>`);
 				console.log("Valid");
 				break;		
-			case "Log Out":
+			case "Log Out": //URL REDIRECT
 				window.location.assign("http://127.0.0.1:8000/");
 				console.log("Valid");
 				break;		
-			default:
+			default: //DISPLAY TEXT
 				$("#contentLine").append(
 				`<p>Invalid Input: Please type 'Help' if you 
 				have forgotten the required command.</p>`);
 				console.log("Invalid");
 				break;	
 		}
-		$("#contentLine").scrollTop($("#contentLine")[0].scrollHeight);
-		return false;
+		$("#contentLine").scrollTop($("#contentLine")[0].scrollHeight); //FORCE SCROLL TO BOTTOM
+		return false; //DON'T REFRESH PAGE
 	});
 }
 

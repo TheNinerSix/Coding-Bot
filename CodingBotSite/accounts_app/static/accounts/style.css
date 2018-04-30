@@ -96,6 +96,7 @@ body {
 	width: 100%;
 	border-style: none;
 	box-shadow: none;
+	outline: none;
 }
 
 /* command line input field */
