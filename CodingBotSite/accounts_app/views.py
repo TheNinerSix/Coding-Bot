@@ -5,13 +5,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic
 from django.views.generic import View
-from .forms import UserRegistrationForm, LoginForm
+from .forms import UserRegistrationForm, LoginForm, studentMenuForm
 from .models import UserType
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import generic
-from django.views.generic import View
-from .forms import studentMenuForm
 
 # Create your views here.
 
