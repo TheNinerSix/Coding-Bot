@@ -9,6 +9,7 @@ class Course(models.Model):
     numEnrolled = models.IntegerField(default=0)
     openDate = models.DateTimeField('Open Date')
     closeDate = models.DateTimeField('Close Date')
+    classCode = models.CharField(max_length=30, unique=True, default=0)
     professorID = models.ForeignKey(Professor, on_delete=models.CASCADE)
 
 class Enrollment(models.Model):
@@ -23,6 +24,7 @@ class Progress(models.Model):
     attempts = models.IntegerField(default=0)
 
 
+# links the Pack and Course together
 class Connection(models.Model):
     packID = models.ForeignKey(Pack, on_delete=models.CASCADE)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE)

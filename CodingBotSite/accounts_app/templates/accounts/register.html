@@ -1,9 +1,10 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Registration</title>
-	<link rel="shortcut icon" href="%{ static 'accounts/images/codingBot.png' %}">
+	<link rel="shortcut icon" href="{% static 'accounts/images/codingBot.png' %}">
 	<meta charset="utf-8">
 	<meta name="viewport" content"width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -13,28 +14,98 @@
 	<script src="{% static 'accounts/controlOperations.js' %}"></script>
 </head>
 <body>
+
 <!--Container for bootstrap organization-->
 <div class="container">
 	<h1>Coding Bot: Basics of Java</h1>
-	<!--Form meant to store new account in database-->
-	<!--Currently changes current url to the login page-->
-	<form action="login.html" target="_self">
+	<form action="" method="POST" >
+		{% csrf_token %}
 		<div class="form-group row">
 			<div class="col-sm-1"></div>
 			<div class="col-sm-5">
-				<input class="form-control" type="email" name="email" placeholder=".edu email">
-				<input class="form-control" type="text" name="firstname" placeholder="First Name">
-				<input class="form-control" type="password" name="reenter" placeholder="Re-enter Password">	
+				{{ form.username|add_class:"form-control"|attr:"placeholder:Username" }}
+				{{ form.email|add_class:"form-control"|attr:"placeholder:Email" }}
+				{{ form.password|add_class:"form-control"|attr:"placeholder:Password" }}
 			</div>
 			<div class="col-sm-5">
-				<input class="form-control" type="text" name="classcode" placeholder="Class Code">
-				<input class="form-control" type="text" name="lastname" placeholder="Last Name">
-				<input class="form-control" type="password" name="password" placeholder="Password">
+				{{ form.first_name|add_class:"form-control"|attr:"placeholder:First Name" }}
+				{{ form.last_name|add_class:"form-control"|attr:"placeholder:Last Name" }}	
 			</div>
 			<div class="col-sm-1"></div>
 		</div>
-		<button id="submit" type="submit" class="btn btn-outline-success">> Submit <</button>
+		<!-- Submit Button -->
+		<button id="submit" type="submit" value="Register" class="btn btn-outline-success">Submit</button>
 	</form>
 </div>
 </body>
 </html>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+
+<!-- <script>
+	$("#id_form_classCode").focusout(function()
+	{
+		console.log($(this).val());
+	});
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
+			$("#form_register").submit(
+	
+				   function()
+				   {
+					// var formData = new FormData($(this)[0]);
+
+					   $.ajax(
+					   {
+						url: $(this).attr('action'),
+						type: 'POST',
+						data: formData,
+						async: true,
+						success: function (data) 
+						{
+							// if Json returns the error-classCode (class code doesn't exist)
+							if(data.error==="error-classCode")
+							{
+								alert("That class code does not exist.");
+							}
+							// Generic failure
+							else if(data.error==="error-generic")
+							{	
+								alert("Sorry, something went wrong.");
+							}
+
+							
+						},
+	
+						cache: false,
+						contentType: false,
+						processData: false
+				   
+					});
+				   
+					   return false; // return false to prevent page reload
+				}
+			);
+		</script> -->
+	
