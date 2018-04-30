@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic
@@ -15,24 +16,33 @@ def index(request):
     return render(request, 'accounts/index.html', context)
 
 
+# @login_required
 def professor(request):
     context = {}
     return render(request, 'accounts/professor.html', context)
 
 
+# @login_required
 def school(request):
     context = {}
     return render(request, 'accounts/school.html', context)
 
 
+# @login_required
 def student(request):
     context = {}
     return render(request, 'accounts/studentMenu.html', context)
 
 
+# @login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+def login_error(request):
+    context = {}
+    return render(request, 'accounts/loginError.html', context)
 
 
 class LoginFormView(View):
@@ -49,9 +59,18 @@ class LoginFormView(View):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            return redirect('student')
 
+            # test if user is a student, professor, or school, and redirect accordingly
+            u = User.objects.get(username=request.user.username)
+            user_type = u.usertype.userType
+            if user_type == 'STUD':
+                return redirect('student')
+            elif user_type == 'PROF':
+                return redirect('professor')
+            elif user_type == 'SCHL':
+                return redirect('school')
+            else:
+                return redirect('login_error')
         else:
             # Return an 'invalid login' error message
             return redirect('https://www.google.com/')
