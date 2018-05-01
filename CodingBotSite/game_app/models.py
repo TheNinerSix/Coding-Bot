@@ -1,9 +1,11 @@
 from django.db import models
 
+
 class Pack(models.Model):
     topic = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
     finished = models.IntegerField(default=0)   
+
 
 class Problem(models.Model):
     probQuestion = models.TextField(max_length=2000)

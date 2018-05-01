@@ -8,15 +8,15 @@ from .models import School, Student, Professor, UserType
 
 class SchoolAdmin(admin.ModelAdmin):
     # fields to display in the django admin database view
-    list_display = ('pk', 'schoolName', 'email', 'password')
+    list_display = ('pk', 'userID')
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'firstName', 'lastName', 'email', 'password', 'schoolID')
+    list_display = ('pk', 'userID', 'schoolID')
 
 
 class ProfessorAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'firstName', 'lastName', 'email', 'password', 'schoolID')
+    list_display = ('pk', 'userID', 'schoolID')
 
 
 class UserTypeAdmin(admin.ModelAdmin):
