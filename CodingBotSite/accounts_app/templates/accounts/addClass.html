@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Class</title>
+</head>
+<body>
+    <div>
+        <h3>Please Enroll in a Course</h3>
+        <p>Please enter a class code to enroll in a course. Contact your instructor for a class code.</p>
+        <form action="" method="POST" >
+            {% csrf_token %}
+
+            {{ form }}
+
+            <!-- Submit Button -->
+            <button id="submit" type="submit" value="Register" class="btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+
+    </body>
+</html>
