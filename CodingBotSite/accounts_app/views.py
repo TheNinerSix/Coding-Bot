@@ -8,7 +8,8 @@ from django.views.generic import View
 from .forms import UserRegistrationForm, LoginForm, studentMenuForm, AddClassForm
 from .models import UserType
 from django.shortcuts import render
-from course_app.models import Enrollment, Course
+from course_app.models import Enrollment, Course, Progress
+from game_app.models import Pack, Problem
 from .models import Student, School
 
 # Create your views here.
@@ -108,10 +109,8 @@ class LoginFormView(View):
             else:
                 return redirect('login_error')
         else:
-            # Return an 'invalid login' error message
-            return redirect('https://www.google.com/')
-
-        # return render(request, self.template_name, {'form': form})
+            # the user does not exist, return the login page
+            return redirect('login')
 
 
 # handles the registration page logic
@@ -170,8 +169,12 @@ class AddClassFormView(View):
 
             # get courseID from course table by using class code the student entered from the form
             class_code = str(form.cleaned_data['class_code'])
-            print('str(form.cleaned_data[class_code] returned: ' + class_code)
-            course_id = Course.objects.get(classCode=class_code)
+            # Error Handling: if the class code they entered exists, perform the query
+            # else return them to the add class page
+            if Course.objects.filter(classCode=class_code).exists():
+                course_id = Course.objects.get(classCode=class_code)
+            else:
+                return render(request, self.template_name, {'form': form})
 
             # create new Enrollment table instance
             new_enrollment = Enrollment(
@@ -182,13 +185,28 @@ class AddClassFormView(View):
             # save the new instance of the enrollment table
             new_enrollment.save()
 
-            # TODO Initialize all the progress for the problems
+            # ----------------------------------------------------------------------------------------------------------
+            # This section of code initializes all the progress records for all the problems in the packs
+            # get all the packs
+            packs_object = Pack.objects.all()
+            # loop through each pack
+            for pack in packs_object.iterator():
+                # get the problems in the pack
+                problems_in_pack_object = Problem.objects.filter(packId=pack)
+                # loop through each problem
+                for problem in problems_in_pack_object.iterator():
+                    # create a new progress record for the student on a particular problem
+                    progress_instance = Progress(
+                        problemID=problem,
+                        packID=pack,
+                        enrollmentID=new_enrollment,
+                    )
+                    # save the new table record
+                    progress_instance.save()
+            # ----------------------------------------------------------------------------------------------------------
 
-
-
-
-            # redirect them to the login page so they can now login with their account
+            # redirect them to the student menu page
             return redirect('student')
 
-        # if register fails return register page
+        # if the form is not valid display a new blank form
         return render(request, self.template_name, {'form': form})
