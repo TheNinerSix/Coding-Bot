@@ -1,0 +1,119 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Professor</title>
+	<link rel="shortcut icon" href="{% static 'accounts/images/codingBot.png' %}">
+	<meta charset="utf-8">
+	<meta name="viewport" content"width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="{% static 'accounts/controlOperations.js' %}"></script>
+</head>
+<body>
+	<div class="container">
+		<!--All the navigation options are under this ul-->
+		<ul class="nav nav-tabs nav-justified">
+			<!--Pulls the class creation code from the Javascript Function-->
+			<li class="nav-item">
+				<a class="nav-link" href="professorCreate">Create Class</a>
+			</li>
+			<!--A dropdown list of all classes. Pulls code from Javascript function-->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-toggle="dropdown"
+				href="#!" role="button" aria-haspopup="true" aria-expanded="true">
+				View/Edit Class</a>
+			<div class="dropdown-menu">
+				{% for course in courses %}
+					<a class="dropdown-item" href="professorView?courseID={{ course.id }}">{{ course.name }}</a>
+				{% endfor %}
+			</div>
+			<!--Log Out button to return to the login page-->
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="./">Log Out</a>
+			</li>
+		</ul>
+		<!--Container field for all the content below the navigation bar-->
+		<!--tabBorder is the grey border, currentTab is the white interior-->
+		<div class="tabBorder">
+			<div class="currentTab" id="professorView">
+			<!--Welcome message that will be removed when an option is selected-->
+				<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for roster in roster %}
+						<tr>
+							<td>{{ roster.first_name }} {{ roster.last_name }}</td>
+							<td>{{ roster.email }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				</div>
+				<button class="btn btn-success" type="button" data-toggle="collapse" data-target="#editClass" aria-expanded="false" aria-controls="editClass">Edit Class</button>
+				<div class="collapse" id="editClass">
+					<br />
+					<form action="" method="post">
+						{% csrf_token %}
+						<div class="form-group row">
+							<span class="col-sm-6">Class Name</span>
+							<span class="col-sm-6">Class Section</span>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="text" name="name" value="{{ thisCourse.name }}">
+							</div>
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="text" name="sectionNum" value="{{ thisCourse.sectionNum }}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<span class="col-sm-6">Max Capacity</span>
+							<span class="col-sm-6">Class Code</span>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="number" name="maxCapacity" min="1" value="{{ thisCourse.maxCapacity }}">
+							</div>
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="text" name="classCode" value="{{ thisCourse.classCode }}" disabled>
+							</div>
+						</div>
+						<div class="form-group row">
+							<span class="col-sm-6">Open Date for Enrollment</span>
+							<span class="col-sm-6">Close Date for Enrollment</span>
+						</div>						
+						<div class="form-group row">
+							<span class="col-sm-6">{{ thisCourse.openDate }}</span>
+							<span class="col-sm-6">{{ thisCourse.closeDate }}</span>
+						</div>
+						<div class="form-group row">
+							<span class="col-sm-6">FORMAT: "YYYY-MM-DD"</span>
+							<span class="col-sm-6">FORMAT: "YYYY-MM-DD"</span>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="datetime" name="openDate">
+							</div>
+							<div class="col-sm-6">
+							<input class="form-control-sm" type="datetime" name="closeDate">
+							</div>
+						</div>
+						<button type="submit" class="btn btn-success">Submit</button>
+						</form>	
+			</div>
+		</div>
+	</div>	
+</body>
+</html>

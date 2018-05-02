@@ -1,10 +1,9 @@
-{% load staticfiles %}
-{% load widget_tweaks %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Professor</title>
-	<link rel="shortcut icon" href="{% static 'accounts/images/codingBot.png' %}">
+	<title>School Admin</title>
+	<link rel="shortcut icon" href="%{ static 'accounts/images/codingBot.png' %}">
 	<meta charset="utf-8">
 	<meta name="viewport" content"width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -18,20 +17,13 @@
 	<div class="container">
 		<!--All the navigation options are under this ul-->
 		<ul class="nav nav-tabs nav-justified">
-			<!--Pulls the class creation code from the Javascript Function-->
+			<!--Pulls the professor creation code from the Javascript Function-->
 			<li class="nav-item">
-				<a class="nav-link" href="professorCreate">Create Class</a>
+				<a class="nav-link" href="schoolCreate">Create Professor Account</a>
 			</li>
-			<!--A dropdown list of all classes. Pulls code from Javascript function-->
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown"
-				href="#!" role="button" aria-haspopup="true" aria-expanded="true">
-				View/Edit Class</a>
-			<div class="dropdown-menu">
-				{% for course in courses %}
-					<a class="dropdown-item" href="professorView?courseID={{ course.id }}">{{ course.name }}</a>
-				{% endfor %}
-			</div>
+			<!--Pulls the view acocunt code from the Javascript Function-->
+			<li class="nav-item">
+				<a class="nav-link" href="schoolView"">View Accounts</a>
 			<!--Log Out button to return to the login page-->
 			</li>
 			<li class="nav-item">
@@ -41,11 +33,43 @@
 		<!--Container field for all the content below the navigation bar-->
 		<!--tabBorder is the grey border, currentTab is the white interior-->
 		<div class="tabBorder">
-			<div class="currentTab" id="professorView">
+			<div class="currentTab" id="schoolView">
 			<!--Welcome message that will be removed when an option is selected-->
-			<p style="text-align: center;">Welcome {{ professorName }}!<p>
+				<h1>Account List</h1>
+				<button class="btn" type="button" data-toggle="collapse" data-target=".students" aria-expanded="false" aria-controls="students">Show/Hide Students</button>
+				<button class="btn" type="button" data-toggle="collapse" data-target=".professors" aria-expanded="false" aria-controls="professors">Show/Hide Professors</button>
+				<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Username</th>
+							<th>Name</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for professor in professorData %}
+						<tr class="professors collapse show">
+							<td>Professor</td>
+							<td>{{ professor.username }}</td>
+							<td>{{ professor.first_name }} {{ professor.last_name }}</td>
+							<td>{{ professor.email }}</td>
+						</tr>
+					{% endfor %}
+					{% for student in studentData %}
+						<tr class="students collapse show">
+							<td>Student</td>
+							<td>{{ student.username }}</td>
+							<td>{{ student.first_name }} {{ student.last_name }}</td>
+							<td>{{ student.email }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				</div>	
 			</div>
 		</div>
-	</div>	
+	</div>
 </body>
 </html>
