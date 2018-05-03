@@ -477,7 +477,8 @@ def check_answer(my_student_answer):
     mainMethod = re.sub(r'_+', cleanedInput, my_problem_question)
 
     # creates and writes to file
-    textFile = "runFileDocker/volume/Student" + get_student_id() + ".txt"
+    # textFile = "runFileDocker/volume/Student" + get_student_id() + ".txt"
+    textFile = "student" + get_student_id() + ".txt"
     className = "Student" + get_student_id()
     file = open(textFile, "w")
     file.write("public class " + className + " {")
@@ -485,19 +486,20 @@ def check_answer(my_student_answer):
     file.write("}")
     file.close()
 
+    # ------------------------------------------------------
+    # for testing purposes, delete after testing done
+    output=True
+    # ------------------------------------------------------
     # gets output from docker and removes file
-    output = subprocess.run(
-        "docker exec -it answer-checker bash -c 'cd ./volume; javac " + textFile + " ; java " + className + "'",
-        shell=True)
-    os.remove(textFile)
+    # output = subprocess.run(
+    #     "docker exec -it answer-checker bash -c 'cd ./volume; javac " + textFile + " ; java " + className + "'",
+    #     shell=True)
+    # os.remove(textFile)
 
-    flag = False
     # check output against database
     if output == correct_answer:
         return True
     else:
-        # if not correct save field to database and run in database
-        flag = True
         return False
 
 
