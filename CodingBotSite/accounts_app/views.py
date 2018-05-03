@@ -250,14 +250,199 @@ class PackSelectFormView(View):
             command = str(form.cleaned_data['input'])
 
             if command == 'Print Statements':
-                pass
+                return redirect('game_print_statements')
             elif command == 'If Statements':
-                pass
+                return redirect('game_if_statements')
             elif command == 'Math Functions':
-                pass
+                return redirect('game_math_functions')
             elif command == 'Main Menu':
                 return redirect('student')
             elif command == 'Log Out':
                 return redirect('logout')
             else:
                 return redirect('pack_select')
+
+
+class GamePrintStatementsFormView(View):
+    form_class = CommandLineForm
+    template_name = "accounts/gamePrintStatements.html"
+
+    def get(self, request):
+        form = self.form_class(None)
+
+        # Get story and problem and send them to the template
+        # get the print statement pack
+        pack_object = Pack.objects.get(topic='Print Statements')
+        pack_id = pack_object
+        # get the problems that are in the print statements pack
+        problems_queryset = Problem.objects.filter(packId=pack_id)
+
+        # get the first not-completed problem
+
+        user = request.user
+
+        student_object = Student.objects.get(userID=user)
+        # get the enrollment table of the student
+        enrollment = Enrollment.objects.get(studID=student_object)
+
+        # if there exists a problem in the print statements pack that the
+        # student has not completed (completed=0) then get the problem
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
+            # store the problem id
+            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            problem_id = current_progress_problem.problemID
+            print('DEBUG====================================Problem ID=' + str(problem_id))
+            current_problem = Problem.objects.get(pk=problem_id.pk)
+            story = current_problem.story
+            problem_question = current_problem.probQuestion
+
+            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        else:
+            return redirect('pack_select')
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            # ----------------------------------------------------------------------
+            # Test if the user entered 'MainMenu', 'Log Out', or an answer
+
+            # get the form data
+            command = str(form.cleaned_data['input'])
+
+            if command == 'Main Menu':
+                return redirect('student')
+            elif command == 'Log Out':
+                return redirect('logout')
+            else:
+                # TODO: see if the answer is correct
+                pass
+
+
+class GameIfStatementsFormView(View):
+    form_class = CommandLineForm
+    template_name = "accounts/gameIfStatements.html"
+
+    def get(self, request):
+        form = self.form_class(None)
+
+
+        # Get story and problem and send them to the template
+        # get the print statement pack
+        pack_object = Pack.objects.get(topic='If Statements')
+        pack_id = pack_object
+        # get the problems that are in the print statements pack
+        problems_queryset = Problem.objects.filter(packId=pack_id)
+
+        # get the first not-completed problem
+
+        user = request.user
+
+        student_object = Student.objects.get(userID=user)
+        # get the enrollment table of the student
+        enrollment = Enrollment.objects.get(studID=student_object)
+
+        # if there exists a problem in the print statements pack that the
+        # student has not completed (completed=0) then get the problem
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
+            # store the problem id
+            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            problem_id = current_progress_problem.problemID
+            print('DEBUG====================================Problem ID=' + str(problem_id))
+            current_problem = Problem.objects.get(pk=problem_id.pk)
+            story = current_problem.story
+            problem_question = current_problem.probQuestion
+
+            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        else:
+            return redirect('pack_select')
+
+
+
+
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            # ----------------------------------------------------------------------
+            # Test if the user entered 'Main Menu', 'Log Out', or an answer
+
+            # get the form data
+            command = str(form.cleaned_data['input'])
+
+            if command == 'Main Menu':
+                return redirect('student')
+            elif command == 'Log Out':
+                return redirect('logout')
+            else:
+                # TODO: see if the answer is correct
+                pass
+
+
+class GameMathFunctionsFormView(View):
+    form_class = CommandLineForm
+    template_name = "accounts/gameMathFunctions.html"
+
+    def get(self, request):
+        form = self.form_class(None)
+
+
+        # Get story and problem and send them to the template
+        # get the print statement pack
+        pack_object = Pack.objects.get(topic='Math Functions')
+        pack_id = pack_object
+        # get the problems that are in the print statements pack
+        problems_queryset = Problem.objects.filter(packId=pack_id)
+
+        # get the first not-completed problem
+
+        user = request.user
+
+        student_object = Student.objects.get(userID=user)
+        # get the enrollment table of the student
+        enrollment = Enrollment.objects.get(studID=student_object)
+
+        # if there exists a problem in the print statements pack that the
+        # student has not completed (completed=0) then get the problem
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
+            # store the problem id
+            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            problem_id = current_progress_problem.problemID
+            print('DEBUG====================================Problem ID=' + str(problem_id))
+            current_problem = Problem.objects.get(pk=problem_id.pk)
+            story = current_problem.story
+            problem_question = current_problem.probQuestion
+
+            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+        # else: TODO: redirect the user to a page to inform them they've already completed the pack
+        else:
+            return redirect('pack_select')
+
+
+
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            # ----------------------------------------------------------------------
+            # Test if the user entered 'MainMenu', 'Log Out', or an answer
+
+            # get the form data
+            command = str(form.cleaned_data['input'])
+
+            if command == 'Main Menu':
+                return redirect('student')
+            elif command == 'Log Out':
+                return redirect('logout')
+            else:
+                # TODO: see if the answer is correct
+                pass

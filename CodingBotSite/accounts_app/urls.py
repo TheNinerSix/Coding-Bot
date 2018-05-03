@@ -2,7 +2,6 @@ from django.urls import path
 
 # import views from current directory
 from . import views
-
 urlpatterns = [
     # codingbot.com/
     path('', views.LoginFormView.as_view(), name='login'),
@@ -22,4 +21,11 @@ urlpatterns = [
     path('add_class', views.AddClassFormView.as_view(), name='add_class'),
     # codingbot.com/pack_select
     path('pack_select', views.PackSelectFormView.as_view(), name='pack_select'),
+    # codingbot.com/game_print_statements
+    path('game_print_statements', views.GamePrintStatementsFormView.as_view(), name='game_print_statements'),
+    # codingbot.com/game_if_statements
+    path('game_if_statements', views.GameIfStatementsFormView.as_view(), name='game_if_statements'),
+    # codingbot.com/game_math_functions
+    path('game_math_functions', views.GameMathFunctionsFormView.as_view(), name='game_math_functions'),
 ]
+
