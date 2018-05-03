@@ -42,7 +42,7 @@
 		<!--tabBorder is the grey border, currentTab is the white interior-->
 		<div class="tabBorder">
 			<div class="currentTab" id="professorView">
-			<!--Welcome message that will be removed when an option is selected-->
+			<!--Table containing all of the students that are in the chosen class-->
 				<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
@@ -61,11 +61,13 @@
 					</tbody>
 				</table>
 				</div>
+			<!--Display the form for editing the chosen class if the button is pressed-->
 				<button class="btn btn-success" type="button" data-toggle="collapse" data-target="#editClass" aria-expanded="false" aria-controls="editClass">Edit Class</button>
 				<div class="collapse" id="editClass">
-					<br />
+					<br /> <!--Simple spacer for visual appeal-->
 					<form action="" method="post">
 						{% csrf_token %}
+						<!--Input headers and labels organized into Bootstrap Rows-->
 						<div class="form-group row">
 							<span class="col-sm-6">Class Name</span>
 							<span class="col-sm-6">Class Section</span>

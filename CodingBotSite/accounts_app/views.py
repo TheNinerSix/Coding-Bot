@@ -20,6 +20,7 @@ def index(request):
 	
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+#Welcome page for the professor
 @login_required
 def professor(request):
 	thisProfessor = Professor.objects.get(userID = request.user)
@@ -27,7 +28,7 @@ def professor(request):
 	courses = Course.objects.all().filter(professorID=thisProfessor).values('name','id')
 	return render(request, 'accounts/professor.html', {'courses':courses, 'professorName':professorName})
 
-	
+#View all the students in a particular class and make changes to that class' properties
 class classEditFormView(View):
 	form_class = classEditForm
 	
@@ -38,11 +39,13 @@ class classEditFormView(View):
 		thisCourse = Course.objects.get(id = request.GET['courseID'])
 		usedPacks = Connection.objects.all().filter(courseID = thisCourse)
 		unusedPacks = Pack.objects.all().exclude(pk__in=usedPacks)
+		# Pull the students from the enrollment table if the connection exists
 		if Enrollment.objects.filter(courseID = request.GET['courseID']):
 			studentEnrollment = Enrollment.objects.get(courseID = request.GET['courseID'])
 			studentsIDs = Student.objects.all().filter(pk = studentEnrollment.studID.pk)
 			roster = User.objects.all().filter(pk__in=studentsIDs.values('userID')).values('first_name','last_name','email')
 			return render(request, 'accounts/professorView.html', {'roster':roster, 'courses':courses, 'thisCourse':thisCourse, 'usedPacks':usedPacks, 'unusedPacks':unusedPacks})
+		# Display an empty table if the roster is empty
 		else:
 			roster = ""
 			return render(request, 'accounts/professorView.html', {'roster':roster, 'courses':courses, 'thisCourse':thisCourse, 'usedPacks':usedPacks, 'unusedPacks':unusedPacks})
@@ -56,7 +59,8 @@ class classEditFormView(View):
 			return redirect('professor')
 		else:
 			raise ValueError("Invalid Input")
-		
+
+# Create a new class with connections to three preset packs			
 class classCreationFormView(View):
 	form_class = classCreationForm
 
@@ -70,9 +74,11 @@ class classCreationFormView(View):
 		thisProfessor = Professor.objects.get(userID = request.user)
 		form = self.form_class(request.POST)    
 		if form.is_valid():
+			# Create a new course and add the appropriate professorID
 			form.instance.professorID = thisProfessor
 			new_course = form.save(commit=False)
 			new_course.save()
+			# Create a set of three connection objects for the new course
 			new_connection = Connection.objects.create(
 				packID = Pack.objects.get(pk = 1),
 				courseID = new_course
@@ -94,6 +100,7 @@ class classCreationFormView(View):
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#Welcome page for a School Administrator
 # @login_required
 def school(request):
 	schoolName = request.user.username
@@ -156,6 +163,7 @@ def student(request):
 	context = {}
 	return render(request, 'accounts/studentMenu.html', context)
 
+#Take the input submitted from the pseudo command line interface
 class studentMenuFormView(View):
 	form_class = studentMenuForm
 	template_name = "accounts/studentMenu.html"
