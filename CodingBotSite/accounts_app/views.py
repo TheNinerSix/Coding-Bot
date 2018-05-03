@@ -12,6 +12,9 @@ from django.shortcuts import render
 from course_app.models import Enrollment, Course, Progress
 from game_app.models import Pack, Problem
 from .models import Student, School
+import re
+import subprocess
+import os
 
 # Create your views here.
 
@@ -291,13 +294,24 @@ class GamePrintStatementsFormView(View):
         if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
             # store the problem id
             current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            # set the current progress object (need to set it so we can change the value to completed
+            # if the student answers the problem correctly
+            set_current_progress_object(current_progress_problem)
             problem_id = current_progress_problem.problemID
-            print('DEBUG====================================Problem ID=' + str(problem_id))
             current_problem = Problem.objects.get(pk=problem_id.pk)
-            story = current_problem.story
-            problem_question = current_problem.probQuestion
 
-            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+            story = current_problem.story
+            current_problem_question = current_problem.probQuestion
+            # set the question for the problem for later use
+            set_problem_question(current_problem_question)
+            # get the answer to the problem
+            answer = current_problem.probAnswer
+            # set the answer for use later in the post request
+            set_answer(answer)
+            # set the student id for use in the naming of the file in check_answer()
+            set_student_id(request.user.id)
+
+            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': current_problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
 
         return render(request, self.template_name, {'form': form})
@@ -317,8 +331,18 @@ class GamePrintStatementsFormView(View):
             elif command == 'Log Out':
                 return redirect('logout')
             else:
+                current_student_answer = get_student_answer()
                 # TODO: see if the answer is correct
-                pass
+                bool_correct = check_answer(current_student_answer)
+                if bool_correct:
+                    # set the problem to completed
+                    current_progress = get_current_progress_object()
+                    current_progress.completed=1
+                    current_progress.save()
+                    return redirect('game_print_statements')
+                else:
+                    # return the same problem
+                    return redirect('game_print_statements')
 
 
 class GameIfStatementsFormView(View):
@@ -437,3 +461,86 @@ class GameMathFunctionsFormView(View):
             else:
                 # TODO: see if the answer is correct
                 pass
+
+
+def check_answer(my_student_answer):
+    # get the answer to the problem
+    correct_answer = get_answer()
+    # get the student input
+    student_answer_pre_parse = my_student_answer
+
+    temp = student_answer_pre_parse.replace(";", "")
+    temp2 = temp.replace("{", "")
+    cleanedInput = temp2.replace("}", "")
+    # puts answer into question
+    my_problem_question = get_problem_question()
+    mainMethod = re.sub(r'_+', cleanedInput, my_problem_question)
+
+    # creates and writes to file
+    textFile = "runFileDocker/volume/Student" + get_student_id() + ".txt"
+    className = "Student" + get_student_id()
+    file = open(textFile, "w")
+    file.write("public class " + className + " {")
+    file.write(mainMethod)
+    file.write("}")
+    file.close()
+
+    # gets output from docker and removes file
+    output = subprocess.run(
+        "docker exec -it answer-checker bash -c 'cd ./volume; javac " + textFile + " ; java " + className + "'",
+        shell=True)
+    os.remove(textFile)
+
+    flag = False
+    # check output against database
+    if output == correct_answer:
+        return True
+    else:
+        # if not correct save field to database and run in database
+        flag = True
+        return False
+
+
+def set_student_id(my_student_id):
+    global current_student_id
+    current_student_id=my_student_id
+
+
+def get_student_id():
+    return current_student_id
+
+
+def set_problem_question(question):
+    global problem_question
+    problem_question=question
+
+
+def get_problem_question():
+    return problem_question
+
+
+def set_student_answer(answer):
+    global student_answer
+    student_answer=answer
+
+
+def get_student_answer():
+    return student_answer
+
+
+def set_answer(answer):
+    global problem_answer
+    problem_answer=answer
+
+
+def get_answer():
+    return problem_answer
+
+
+def set_current_progress_object(progress_object):
+    global current_progress_object
+    current_progress_object=progress_object
+
+
+def get_current_progress_object():
+    return current_progress_object
