@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Student Menu</title>
+	<title>Pack Select</title>
 	<link rel="shortcut icon" href="{% static 'accounts/images/codingBot.png' %}">
 	<meta charset="utf-8">
 	<meta name="viewport" content"width=device-width, initial-scale=1">
@@ -14,23 +14,23 @@
 	<!--<script src="{% static 'accounts/controlOperations.js' %}"></script>-->
 </head>
 <body>
+
 <!--Container for bootstrap organization-->
 <div id="page" class="container">
 	<div id="game" class="row">
 		<div id="contentLine">
-			<h2>Coding Bot: Main Menu</h2>
-			<p>Welcome to Coding Bot: Basics of Java!</p>
-			<p>You are currently within the source code of Coding Bot. He is my latest invention in humanoid robotics. 
-			I've sent him out into the world to run some tests on how well he can blend into society, but his current software is unstable. 
-			I need you to monitor his adventures and fill in places in his code when he starts to act suspiciously. 
-			If you can do this well, I'll inform your professor of your abilities and ensure your class grade is remarkably high. 
-			Good luck! -Dr. Javachip</p>
-			<p>Type out one of the following commands to begin playing:</p>
-			<p>'Pack Select' - Choose a question pack to work on<br/>
-			<!--'Class Select' - Choose the class you want to progress in<br/>-->
-			<!--'Progress Report' - View a report of how you're doing<br/>-->
-			<!--'Help' - Display all the available commands<br/>-->
-			'Log Out' - Quit playing with this account</p>
+            <h2>Coding Bot: Pack Select</h2>
+			<p>Please type one of the following commands to select a pack to play.</p>
+			<p>
+                'Print Statements' - The basics of printing to the console. <br/>
+                'If Statements' - The basics of if statements.<br/>
+			    'Math Functions' - The basics of the Java math library.
+            </p>
+            <p>Or, type another command:</p>
+            <p>
+                'Main Menu' - Return to the main menu.<br/>
+                'Log Out' - Quit playing with this account.
+            </p>
 		</div>
 		<!--These lines create the illusion of a command line input field-->
 		<div id="inputLine">
@@ -43,5 +43,6 @@
 		</div>
 	</div>
 </div>
+
 </body>
 </html>
