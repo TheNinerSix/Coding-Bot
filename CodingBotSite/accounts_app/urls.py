@@ -19,5 +19,7 @@ urlpatterns = [
     # codingbot.com/login_error
     path('login_error', views.login_error, name='login_error'),
     # codingbot.com/add_class
-    path('add_class', views.AddClassFormView.as_view(), name='add_class')
+    path('add_class', views.AddClassFormView.as_view(), name='add_class'),
+    # codingbot.com/pack_select
+    path('pack_select', views.PackSelectFormView.as_view(), name='pack_select'),
 ]

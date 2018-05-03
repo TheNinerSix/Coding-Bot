@@ -20,7 +20,7 @@ class UserRegistrationForm(forms.ModelForm):
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
 
-class studentMenuForm(forms.Form):
+class CommandLineForm(forms.Form):
     input = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'id':'commandLine','autofocus':'autofocus','autocomplete':'off'}))
 
 

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic
 from django.views.generic import View
-from .forms import UserRegistrationForm, LoginForm, studentMenuForm, AddClassForm
+from .forms import UserRegistrationForm, LoginForm, CommandLineForm, AddClassForm
 from .models import UserType
 from django.shortcuts import render
 from course_app.models import Enrollment, Course, Progress
@@ -36,15 +36,6 @@ def school(request):
 def student(request):
     context = {}
     return render(request, 'accounts/studentMenu.html', context)
-
-
-class studentMenuFormView(View):
-    form_class = studentMenuForm
-    template_name = "accounts/studentMenu.html"
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
 
 
 # @login_required
@@ -210,3 +201,61 @@ class AddClassFormView(View):
 
         # if the form is not valid display a new blank form
         return render(request, self.template_name, {'form': form})
+
+
+class studentMenuFormView(View):
+    form_class = CommandLineForm
+    template_name = "accounts/studentMenu.html"
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            # ----------------------------------------------------------------------
+            # Test if the user entered 'Pack Select', 'Help', or 'Log Out'
+
+            # get the form data
+            command = str(form.cleaned_data['input'])
+
+            if command == 'Pack Select':
+                return redirect('pack_select')
+            elif command == 'Log Out':
+                return redirect('logout')
+            else:
+                return redirect('student')
+
+
+class PackSelectFormView(View):
+    form_class = CommandLineForm
+    template_name = "accounts/packSelect.html"
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            # ----------------------------------------------------------------------
+            # Test if the user entered 'Print Statements', 'If Statements', 'Main Menu', or 'Log Out'
+
+            # get the form data
+            command = str(form.cleaned_data['input'])
+
+            if command == 'Print Statements':
+                pass
+            elif command == 'If Statements':
+                pass
+            elif command == 'Math Functions':
+                pass
+            elif command == 'Main Menu':
+                return redirect('student')
+            elif command == 'Log Out':
+                return redirect('logout')
+            else:
+                return redirect('pack_select')
