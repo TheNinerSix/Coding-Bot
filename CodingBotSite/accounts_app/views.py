@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -100,6 +101,7 @@ class LoginFormView(View):
             else:
                 return redirect('login_error')
         else:
+            messages.add_message(request, messages.ERROR, 'ERROR: A user with those credentials does not exist.')
             # the user does not exist, return the login page
             return redirect('login')
 
@@ -132,7 +134,7 @@ class UserRegistrationFormView(View):
                 userType='STUD'
             )
             new_user_type.save()
-
+            messages.add_message(request,messages.SUCCESS, 'Registration was successful!')
             # redirect them to the login page so they can now login with their account
             return redirect('login')
 
