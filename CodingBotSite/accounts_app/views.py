@@ -299,8 +299,8 @@ class GamePrintStatementsFormView(View):
 
             return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
-        else:
-            return redirect('pack_select')
+
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -358,11 +358,6 @@ class GameIfStatementsFormView(View):
 
             return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
-        else:
-            return redirect('pack_select')
-
-
-
 
         return render(request, self.template_name, {'form': form})
 
@@ -422,10 +417,6 @@ class GameMathFunctionsFormView(View):
 
             return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
-        else:
-            return redirect('pack_select')
-
-
 
         return render(request, self.template_name, {'form': form})
 
