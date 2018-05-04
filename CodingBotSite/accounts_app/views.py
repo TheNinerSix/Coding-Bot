@@ -352,7 +352,6 @@ class GameIfStatementsFormView(View):
     def get(self, request):
         form = self.form_class(None)
 
-
         # Get story and problem and send them to the template
         # get the print statement pack
         pack_object = Pack.objects.get(topic='If Statements')
@@ -373,14 +372,27 @@ class GameIfStatementsFormView(View):
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
         if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
             # store the problem id
-            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(
+                completed=0).first()
+            # set the current progress object (need to set it so we can change the value to completed
+            # if the student answers the problem correctly
+            set_current_progress_object(current_progress_problem)
             problem_id = current_progress_problem.problemID
-            print('DEBUG====================================Problem ID=' + str(problem_id))
             current_problem = Problem.objects.get(pk=problem_id.pk)
-            story = current_problem.story
-            problem_question = current_problem.probQuestion
 
-            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+            story = current_problem.story
+            current_problem_question = current_problem.probQuestion
+            # set the question for the problem for later use
+            set_problem_question(current_problem_question)
+            # get the answer to the problem
+            answer = current_problem.probAnswer
+            # set the answer for use later in the post request
+            set_answer(answer)
+            # set the student id for use in the naming of the file in check_answer()
+            set_student_id(request.user.id)
+
+            return render(request, self.template_name,
+                          {'form': form, 'story': story, 'problem_question': current_problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
 
         return render(request, self.template_name, {'form': form})
@@ -389,8 +401,6 @@ class GameIfStatementsFormView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            # ----------------------------------------------------------------------
-            # Test if the user entered 'Main Menu', 'Log Out', or an answer
 
             # get the form data
             command = str(form.cleaned_data['input'])
@@ -400,8 +410,18 @@ class GameIfStatementsFormView(View):
             elif command == 'Log Out':
                 return redirect('logout')
             else:
+                current_student_answer = get_student_answer()
                 # TODO: see if the answer is correct
-                pass
+                bool_correct = check_answer(current_student_answer)
+                if bool_correct:
+                    # set the problem to completed
+                    current_progress = get_current_progress_object()
+                    current_progress.completed = 1
+                    current_progress.save()
+                    return redirect('game_if_statements')
+                else:
+                    # return the same problem
+                    return redirect('game_if_statements')
 
 
 class GameMathFunctionsFormView(View):
@@ -410,7 +430,6 @@ class GameMathFunctionsFormView(View):
 
     def get(self, request):
         form = self.form_class(None)
-
 
         # Get story and problem and send them to the template
         # get the print statement pack
@@ -432,14 +451,27 @@ class GameMathFunctionsFormView(View):
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
         if Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).exists():
             # store the problem id
-            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(completed=0).first()
+            current_progress_problem = Progress.objects.filter(enrollmentID=enrollment).filter(packID=pack_id).filter(
+                completed=0).first()
+            # set the current progress object (need to set it so we can change the value to completed
+            # if the student answers the problem correctly
+            set_current_progress_object(current_progress_problem)
             problem_id = current_progress_problem.problemID
-            print('DEBUG====================================Problem ID=' + str(problem_id))
             current_problem = Problem.objects.get(pk=problem_id.pk)
-            story = current_problem.story
-            problem_question = current_problem.probQuestion
 
-            return render(request, self.template_name, {'form': form, 'story': story, 'problem_question': problem_question})
+            story = current_problem.story
+            current_problem_question = current_problem.probQuestion
+            # set the question for the problem for later use
+            set_problem_question(current_problem_question)
+            # get the answer to the problem
+            answer = current_problem.probAnswer
+            # set the answer for use later in the post request
+            set_answer(answer)
+            # set the student id for use in the naming of the file in check_answer()
+            set_student_id(request.user.id)
+
+            return render(request, self.template_name,
+                          {'form': form, 'story': story, 'problem_question': current_problem_question})
         # else: TODO: redirect the user to a page to inform them they've already completed the pack
 
         return render(request, self.template_name, {'form': form})
@@ -448,8 +480,6 @@ class GameMathFunctionsFormView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            # ----------------------------------------------------------------------
-            # Test if the user entered 'MainMenu', 'Log Out', or an answer
 
             # get the form data
             command = str(form.cleaned_data['input'])
@@ -459,8 +489,18 @@ class GameMathFunctionsFormView(View):
             elif command == 'Log Out':
                 return redirect('logout')
             else:
+                current_student_answer = get_student_answer()
                 # TODO: see if the answer is correct
-                pass
+                bool_correct = check_answer(current_student_answer)
+                if bool_correct:
+                    # set the problem to completed
+                    current_progress = get_current_progress_object()
+                    current_progress.completed = 1
+                    current_progress.save()
+                    return redirect('game_math_functions')
+                else:
+                    # return the same problem
+                    return redirect('game_math_functions')
 
 
 def check_answer(my_student_answer):
