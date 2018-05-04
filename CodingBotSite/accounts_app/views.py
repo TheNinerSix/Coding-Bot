@@ -46,8 +46,8 @@ class classEditFormView(View):
         unusedPacks = Pack.objects.all().exclude(pk__in=usedPacks)
         # Pull the students from the enrollment table if the connection exists
         if Enrollment.objects.filter(courseID = request.GET['courseID']):
-            studentEnrollment = Enrollment.objects.get(courseID = request.GET['courseID'])
-            studentsIDs = Student.objects.all().filter(pk = studentEnrollment.studID.pk)
+            studentEnrollment = Enrollment.objects.all().filter(courseID = request.GET['courseID'])
+            studentsIDs = Student.objects.all().filter(pk_in = studentEnrollment.studID.pk)
             roster = User.objects.all().filter(pk__in=studentsIDs.values('userID')).values('first_name','last_name','email')
             return render(request, 'accounts/professorView.html', {'roster':roster, 'courses':courses, 'thisCourse':thisCourse, 'usedPacks':usedPacks, 'unusedPacks':unusedPacks})
         # Display an empty table if the roster is empty
