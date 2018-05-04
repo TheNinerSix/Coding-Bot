@@ -523,6 +523,7 @@ def check_answer(my_student_answer):
     textFile = "runFileDocker/volume/student" + str(get_student_id()) + ".txt"
     className = "student" + str(get_student_id())
     file = open(textFile, "w")
+    file.write("import java.lang.Math; \n")
     file.write("public class " + className + " {\n")
     file.write(mainMethod)
     file.write("\n}")
