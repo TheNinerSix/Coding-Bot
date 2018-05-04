@@ -20,7 +20,7 @@
 		<ul class="nav nav-tabs nav-justified">
 			<!--Pulls the class creation code from the Javascript Function-->
 			<li class="nav-item">
-				<a class="nav-link" href="professorCreate">Create Class</a>
+				<a class="nav-link" href="professor" onClick="createClass()">Create Class</a>
 			</li>
 			<!--A dropdown list of all classes. Pulls code from Javascript function-->
 			<li class="nav-item dropdown">
@@ -43,7 +43,56 @@
 		<div class="tabBorder">
 			<div class="currentTab" id="professorView">
 			<!--Welcome message that will be removed when an option is selected-->
-			<p style="text-align: center;">Welcome {{ professorName }}!<p>
+				<h1>Create a New Class</h1>
+				<!--Input headers and labels organized into Bootstrap Rows-->
+				<form action="" method="post">
+				{% csrf_token %}
+				<div class="form-group row">
+					<span class="col-sm-6">Class Name</span>
+					<span class="col-sm-6">Class Section</span>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+					{{ form.name|add_class:"form-control-sm"|attr:"type:text"}}
+					</div>
+					<div class="col-sm-6">
+					{{ form.sectionNum|add_class:"form-control-sm"|attr:"type:text" }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<span class="col-sm-6">Max Capacity</span>
+					<span class="col-sm-6">Class Code</span>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+					{{ form.maxCapacity|add_class:"form-control-sm"|attr:"type:number"|attr:"min:1" }}
+					</div>
+					<div class="col-sm-6">
+					{{ form.classCode|add_class:"form-control-sm"|attr:"type:text" }}
+					</div>
+				</div>
+				<div class="form-group row">
+					<span class="col-sm-6">Open Date for Enrollment</span>
+					<span class="col-sm-6">Close Date for Enrollment</span>
+				</div>
+				<div class="form-group row">
+					<span class="col-sm-6">FORMAT: "YYYY-MM-DD"</span>
+					<span class="col-sm-6">FORMAT: "YYYY-MM-DD"</span>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+					{{ form.openDate|add_class:"form-control-sm"|attr:"type:datetime" }}
+					</div>
+					<div class="col-sm-6">
+					{{ form.closeDate|add_class:"form-control-sm"|attr:"type:datetime" }}
+					</div>
+				</div>
+				<div class="collapse">
+					{{ form.professorID|add_class:"form-control-sm" }}
+					{{ form.numEnrolled|add_class:"form-control-sm" }}
+				</div>
+				<button type="submit" class="btn btn-success">Submit</button>
+				</form>
 			</div>
 		</div>
 	</div>	

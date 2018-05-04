@@ -35,7 +35,43 @@
 		<div class="tabBorder">
 			<div class="currentTab" id="schoolView">
 			<!--Welcome message that will be removed when an option is selected-->
-				<p style="text-align:center;">Welcome {{schoolName}}!</p>
+				<h1>Account List</h1>
+				<!--Buttons collapse table rows based on class name-->
+				<button class="btn" type="button" data-toggle="collapse" data-target=".students" aria-expanded="false" aria-controls="students">Show/Hide Students</button>
+				<button class="btn" type="button" data-toggle="collapse" data-target=".professors" aria-expanded="false" aria-controls="professors">Show/Hide Professors</button>
+				<!--Table containing all the professors and students connected to the school-->
+				<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Username</th>
+							<th>Name</th>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!--Fill table with professors-->
+					{% for professor in professorData %}
+						<tr class="professors collapse show">
+							<td>Professor</td>
+							<td>{{ professor.username }}</td>
+							<td>{{ professor.first_name }} {{ professor.last_name }}</td>
+							<td>{{ professor.email }}</td>
+						</tr>
+					{% endfor %}
+					<!--Fill table with students-->
+					{% for student in studentData %}
+						<tr class="students collapse show">
+							<td>Student</td>
+							<td>{{ student.username }}</td>
+							<td>{{ student.first_name }} {{ student.last_name }}</td>
+							<td>{{ student.email }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				</div>	
 			</div>
 		</div>
 	</div>
