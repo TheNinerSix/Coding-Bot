@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic
@@ -28,13 +29,17 @@ def index(request):
 #Welcome page for the professor
 @login_required
 def professor(request):
+    u = User.objects.get(username=request.user.username)
+    user_type = u.usertype.userType
+    if user_type != 'PROF':
+        return redirect('logout')
     thisProfessor = Professor.objects.get(userID = request.user)
     professorName = request.user.username
     courses = Course.objects.all().filter(professorID=thisProfessor).values('name','id')
     return render(request, 'accounts/professor.html', {'courses':courses, 'professorName':professorName})
 
 #View all the students in a particular class and make changes to that class' properties
-class classEditFormView(View):
+class classEditFormView(LoginRequiredMixin, View):
     form_class = classEditForm
 
     def get(self, request):
@@ -47,7 +52,7 @@ class classEditFormView(View):
         # Pull the students from the enrollment table if the connection exists
         if Enrollment.objects.filter(courseID = request.GET['courseID']):
             studentEnrollment = Enrollment.objects.all().filter(courseID = request.GET['courseID'])
-            studentsIDs = Student.objects.all().filter(pk_in = studentEnrollment.values('studID'))
+            studentsIDs = Student.objects.all().filter(pk__in = studentEnrollment.values('studID'))
             roster = User.objects.all().filter(pk__in=studentsIDs.values('userID')).values('first_name','last_name','email')
             return render(request, 'accounts/professorView.html', {'roster':roster, 'courses':courses, 'thisCourse':thisCourse, 'usedPacks':usedPacks, 'unusedPacks':unusedPacks})
         # Display an empty table if the roster is empty
@@ -61,12 +66,14 @@ class classEditFormView(View):
             course = Course.objects.get(id = request.GET['courseID'])
             form = self.form_class(request.POST, instance = course)
             form.save()
+            messages.add_message(request, messages.SUCCESS, 'Class Edit Successful!')
             return redirect('professor')
-        else:
-            raise ValueError("Invalid Input")
 
-# Create a new class with connections to three preset packs			
-class classCreationFormView(View):
+        messages.add_message(request, messages.ERROR, 'ERROR: Invalid Input in class edit form.')
+        return redirect('professor')
+
+# Create a new class with connections to three preset packs
+class classCreationFormView(LoginRequiredMixin, View):
     form_class = classCreationForm
 
     def get(self, request):
@@ -99,20 +106,31 @@ class classCreationFormView(View):
             new_connection.save()
             new_connection2.save()
             new_connection3.save()
+            messages.add_message(request, messages.SUCCESS, 'New Course successfully created!')
             return redirect('professor')
-
-        return render(request, 'accounts/professorCreate.html', {'form': form})
+        else:
+            messages.add_message(request, messages.ERROR, 'ERROR: Invalid Input in creation form.')
+            return redirect('professor')
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Welcome page for a School Administrator
-# @login_required
+@login_required
 def school(request):
+    u = User.objects.get(username=request.user.username)
+    user_type = u.usertype.userType
+    if user_type != 'SCHL':
+        return redirect('logout')
     schoolName = request.user.username
     return render(request, 'accounts/school.html', {'schoolName':schoolName})
 
 # view all the accounts in the school page
+@login_required
 def schoolView(request):
+    u = User.objects.get(username=request.user.username)
+    user_type = u.usertype.userType
+    if user_type != 'SCHL':
+        return redirect('logout')
     thisSchool = School.objects.get(userID = request.user)
     professors = Professor.objects.all().filter(schoolID=thisSchool)
     students = Student.objects.all().filter(schoolID=thisSchool)
@@ -121,7 +139,7 @@ def schoolView(request):
     return render(request, 'accounts/schoolView.html', {'professorData':professorData, 'studentData':studentData})
 
 # handles the creation of a professor in the school page
-class professorCreationFormView(View):
+class professorCreationFormView(LoginRequiredMixin, View):
     form_class = UserRegistrationForm
     template_name = 'accounts/schoolCreate.html'
 
@@ -136,7 +154,7 @@ class professorCreationFormView(View):
 
         if form.is_valid():
             # Save the form data in an object, but don't save to database. (Note: form.save gathers all other
-            #   data like email and username, so it doesnt need to be cleaned and explicitly set for new_student.
+            #   data like email and username, so it doesnt need to be cleaned and explicitly set for new_professor.
             thisSchool = School.objects.get(userID = request.user)
             new_professor = form.save(commit=False)
             clean_password = form.cleaned_data['password']
@@ -154,32 +172,13 @@ class professorCreationFormView(View):
                 userID = new_professor,
                 schoolID = thisSchool
             )
-
-            # redirect them to the login page so they can now login with their account
+            messages.add_message(request, messages.SUCCESS, 'New Professor has been successfully created!')
+            return redirect('school')
+        else:
+            messages.add_message(request, messages.ERROR, 'ERROR: Invalid input in professor creation form.')
             return redirect('school')
 
-        # if register fails return register page
-        return render(request, self.template_name, {'form': form})
-
-
-# ----------------------------------------------------------------------------------------------------
-# @login_required
-def student(request):
-    context = {}
-    return render(request, 'accounts/studentMenu.html', context)
-
-#Take the input submitted from the pseudo command line interface
-class studentMenuFormView(View):
-    form_class = studentMenuForm
-    template_name = "accounts/studentMenu.html"
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-
-# -----------------------------------------------------------------------------------------------------
-
-# @login_required
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -283,8 +282,7 @@ class UserRegistrationFormView(View):
         # if register fails return register page
         return render(request, self.template_name, {'form': form})
 
-
-class AddClassFormView(View):
+class AddClassFormView(LoginRequiredMixin, View):
     form_class = AddClassForm
     template_name = 'accounts/addClass.html'
 
@@ -346,8 +344,7 @@ class AddClassFormView(View):
         # if the form is not valid display a new blank form
         return render(request, self.template_name, {'form': form})
 
-
-class studentMenuFormView(View):
+class studentMenuFormView(LoginRequiredMixin, View):
     form_class = CommandLineForm
     template_name = "accounts/studentMenu.html"
 
@@ -372,8 +369,7 @@ class studentMenuFormView(View):
             else:
                 return redirect('student')
 
-
-class PackSelectFormView(View):
+class PackSelectFormView(LoginRequiredMixin, View):
     form_class = CommandLineForm
     template_name = "accounts/packSelect.html"
 
@@ -404,8 +400,7 @@ class PackSelectFormView(View):
             else:
                 return redirect('pack_select')
 
-
-class GamePrintStatementsFormView(View):
+class GamePrintStatementsFormView(LoginRequiredMixin, View):
     form_class = CommandLineForm
     template_name = "accounts/gamePrintStatements.html"
 
@@ -484,8 +479,7 @@ class GamePrintStatementsFormView(View):
                     # return the same problem
                     return redirect('game_print_statements')
 
-
-class GameIfStatementsFormView(View):
+class GameIfStatementsFormView(LoginRequiredMixin, View):
     form_class = CommandLineForm
     template_name = "accounts/gameIfStatements.html"
 
@@ -564,8 +558,7 @@ class GameIfStatementsFormView(View):
                     # return the same problem
                     return redirect('game_if_statements')
 
-
-class GameMathFunctionsFormView(View):
+class GameMathFunctionsFormView(LoginRequiredMixin, View):
     form_class = CommandLineForm
     template_name = "accounts/gameMathFunctions.html"
 

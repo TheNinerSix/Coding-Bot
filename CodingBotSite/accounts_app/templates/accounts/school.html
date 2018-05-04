@@ -27,7 +27,7 @@
 			<!--Log Out button to return to the login page-->
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="./">Log Out</a>
+				<a class="nav-link" href="{% url 'logout' %}">Log Out</a>
 			</li>
 		</ul>
 		<!--Container field for all the content below the navigation bar-->
@@ -36,6 +36,13 @@
 			<div class="currentTab" id="schoolView">
 			<!--Welcome message that will be removed when an option is selected-->
 				<p style="text-align:center;">Welcome {{schoolName}}!</p>
+				{% if messages %}
+				<div class="messages" style="text-align: center">
+					{% for message in messages %}
+					<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+					{% endfor %}
+				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
