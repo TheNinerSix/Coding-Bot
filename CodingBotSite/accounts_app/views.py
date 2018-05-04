@@ -325,6 +325,7 @@ class GamePrintStatementsFormView(View):
 
             # get the form data
             command = str(form.cleaned_data['input'])
+            set_student_answer(command)
 
             if command == 'Main Menu':
                 return redirect('student')
@@ -404,6 +405,7 @@ class GameIfStatementsFormView(View):
 
             # get the form data
             command = str(form.cleaned_data['input'])
+            set_student_answer(command)
 
             if command == 'Main Menu':
                 return redirect('student')
@@ -483,6 +485,7 @@ class GameMathFunctionsFormView(View):
 
             # get the form data
             command = str(form.cleaned_data['input'])
+            set_student_answer(command)
 
             if command == 'Main Menu':
                 return redirect('student')
